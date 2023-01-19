@@ -19,7 +19,6 @@ jobs:
        run: |
          aws --version
          aws configure list | grep region | awk '{print $2}'
-
      - name: Checkout
        uses: actions/checkout@v2 
 
