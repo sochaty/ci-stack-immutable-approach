@@ -1,5 +1,5 @@
 name: jekins
-on: [push, pull_request]
+on: [push]
 jobs:
   aws-cli:
    name: AWS cI Setup 
@@ -11,7 +11,7 @@ jobs:
          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          aws-region: us-east-1
-     - name: Copy files to the test website with the AWS CLI
+     - name: Test configuration of AWS CLI
        run: |
          aws --version
          aws configure list | grep region | awk '{print $2}'
