@@ -1,5 +1,8 @@
 name: jekins
-on: [push]
+on: 
+ push:
+   branches:
+     - "master"
 jobs:
   aws-cli:
    name: AWS CLI Setup 
