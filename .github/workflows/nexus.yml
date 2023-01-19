@@ -1,1 +1,44 @@
 name: nexus
+on: 
+ push:
+   branches:
+     - "master"
+   paths:
+     - "packer/aws/nexus/**"
+     - "scripts/nexus.sh"
+jobs:
+  aws-cli:
+   name: Nexus AMI creation #AWS CLI Setup 
+   runs-on: ubuntu-22.04
+   steps:
+     - name: Configure AWS Credentials
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: us-east-1
+
+     - name: Test configuration of AWS CLI
+       run: |
+         aws --version
+         aws configure list | grep region | awk '{print $2}'
+     - name: Checkout
+       uses: actions/checkout@v2 
+
+     - name: Setup `packer`
+       uses: hashicorp/setup-packer@main
+       id: setup
+       with:
+          version: "1.8.5" # or `latest`
+
+     - name: Run `packer init`
+       id: init
+       run: "packer init ./packer/aws/nexus/"
+
+     - name: Run `packer validate`
+       id: validate
+       run: "packer validate ./packer/aws/nexus/"
+
+     - name: Run `packer build`
+       id: build
+       run: "packer build ./packer/aws/nexus/"
