@@ -3,6 +3,9 @@ on:
  push:
    branches:
      - "master"
+   paths:
+     - "packer/aws/jenkins/**"
+     - "scripts/jenkins.sh"
 jobs:
   aws-cli:
    name: Jenkins AMI creation #AWS CLI Setup 
@@ -39,10 +42,3 @@ jobs:
      - name: Run `packer build`
        id: build
        run: "packer build ./packer/aws/jenkins/"
-
-  # packer:
-  #  name: Packer Setup and Jenkins AMI creation
-  #  runs-on: ubuntu-22.04
-  #  needs: [aws-cli]
-  #  steps:
-     

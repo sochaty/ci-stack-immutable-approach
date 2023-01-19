@@ -13,5 +13,3 @@ variable "tags" {
   description = "Tags"
   default     = {}
 }
-
-# test the workflow
