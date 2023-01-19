@@ -5,7 +5,7 @@ on:
      - "master"
 jobs:
   aws-cli:
-   name: AWS CLI Setup 
+   name: Jenkins AMI creation #AWS CLI Setup 
    runs-on: ubuntu-22.04
    steps:
      - name: Configure AWS Credentials
@@ -19,11 +19,7 @@ jobs:
        run: |
          aws --version
          aws configure list | grep region | awk '{print $2}'
-  packer:
-   name: Packer Setup and Jenkins AMI creation
-   runs-on: ubuntu-22.04
-   needs: [aws-cli]
-   steps:
+
      - name: Checkout
        uses: actions/checkout@v2 
 
@@ -44,3 +40,10 @@ jobs:
      - name: Run `packer build`
        id: build
        run: "packer build ./packer/aws/jenkins/"
+
+  # packer:
+  #  name: Packer Setup and Jenkins AMI creation
+  #  runs-on: ubuntu-22.04
+  #  needs: [aws-cli]
+  #  steps:
+     
