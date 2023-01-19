@@ -1,7 +1,7 @@
 locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
-
+# source
 source "amazon-ebs" "aws_linux" {
   ami_name      = "nexus-server-${local.timestamp}"
   instance_type = var.instance_type
