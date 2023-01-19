@@ -32,6 +32,6 @@ build {
   sources     = ["source.amazon-ebs.aws_linux"]
 
   provisioner "shell" {
-    script = "../../../scripts/nexus.sh"
+    script = "./scripts/nexus.sh"
   }
 }
