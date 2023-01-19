@@ -36,6 +36,6 @@ build {
   sources     = ["source.amazon-ebs.ubuntu"]
 
   provisioner "shell" {
-    script = "../../../scripts/jenkins.sh"
+    script = "./scripts/jenkins.sh"
   }
 }
