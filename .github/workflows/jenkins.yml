@@ -32,5 +32,5 @@ jobs:
 
      - name: Run `packer validate`
        id: validate
-       run: "packer validate ./image.pkr.hcl"
+       run: "packer validate ./packer/aws/jenkins/jenkins-ubuntu.pkr.hcl"
    
