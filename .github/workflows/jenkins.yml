@@ -6,12 +6,16 @@ on:
    paths:
      - "packer/aws/jenkins/**"
      - "scripts/jenkins.sh"
-     - ".github/wokflows/jenkins.yml"
+     - "./.github/wokflows/jenkins.yml"
+     - "./.github/composite_actions/packer/**"
 jobs:
   aws-cli:
    name: Jenkins AMI creation #AWS CLI Setup 
    runs-on: ubuntu-22.04
    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 
+
       - id: ami-build
         uses: "./.github/composite_actions/packer"
         with:
@@ -27,8 +31,7 @@ jobs:
     #    run: |
     #      aws --version
     #      aws configure list | grep region | awk '{print $2}'
-    #  - name: Checkout
-    #    uses: actions/checkout@v2 
+     
 
     #  - name: Setup `packer`
     #    uses: hashicorp/setup-packer@main
