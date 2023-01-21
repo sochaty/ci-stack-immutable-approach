@@ -31,8 +31,8 @@ runs:
         aws configure list | grep region | awk '{print $2}'
       shell: bash
 
-    - name: Checkout
-      uses: actions/checkout@v2 
+    # - name: Checkout
+    #   uses: actions/checkout@v2 
 
     - name: Setup `packer`
       uses: hashicorp/setup-packer@main
