@@ -1,6 +1,6 @@
 name: jekins
 on: 
- pull_request:
+ push:
    branches:
      - "master"
    paths:
@@ -17,9 +17,9 @@ jobs:
         uses: actions/checkout@v2 
 
       - id: ami-build
-        uses: "/composite_actions/packer"
+        uses: ./.github/composite_actions/packer
         with:
-          script-input: './packer/aws/jenkins/'
+          script-input: ./packer/aws/jenkins/
     #  - name: Configure AWS Credentials
     #    uses: aws-actions/configure-aws-credentials@v1
     #    with:
