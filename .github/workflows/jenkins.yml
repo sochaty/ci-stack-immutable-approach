@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2 
 
       - id: ami-build
-        uses: ".github/composite_actions/packer"
+        uses: "/composite_actions/packer"
         with:
           script-input: './packer/aws/jenkins/'
     #  - name: Configure AWS Credentials
