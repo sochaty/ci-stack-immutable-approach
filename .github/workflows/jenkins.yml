@@ -6,6 +6,7 @@ on:
    paths:
      - "packer/aws/jenkins/**"
      - "scripts/jenkins.sh"
+     - ".github/wokflows/jenkins.yml"
 jobs:
   aws-cli:
    name: Jenkins AMI creation #AWS CLI Setup 
