@@ -25,13 +25,13 @@ source "amazon-ebs" "ubuntu" {
 }
 
 build {
-  name        = "nexus-server"
+  name        = "sonarqube-server"
   description = <<EOF
-  This build creates aws linux images for nexus server
+  This build creates aws linux images for sonarqube server
   EOF
   sources     = ["source.amazon-ebs.ubuntu"]
 
   provisioner "shell" {
-    script = "../../../scripts/sonarqube.sh"
+    script = "./scripts/sonarqube.sh"
   }
 }
