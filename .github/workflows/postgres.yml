@@ -1,11 +1,13 @@
 name: postgres
-on: 
- push:
-   branches:
-     - "master"
-   paths:
-     - "packer/aws/postgres/**"
-     - "scripts/postgres.sh"
+# on: 
+#  push:
+#    branches:
+#      - "master"
+#    paths:
+#      - "packer/aws/postgres/**"
+#      - "scripts/postgres.sh"
+on: workflow_dispatch
+ 
 jobs:
   aws-cli:
    name: Postgres AMI creation #AWS CLI Setup 
