@@ -32,6 +32,6 @@ build {
   sources     = ["source.amazon-ebs.ubuntu"]
 
   provisioner "shell" {
-    script = "../../../scripts/postgres.sh"
+    script = "./scripts/postgres.sh"
   }
 }
