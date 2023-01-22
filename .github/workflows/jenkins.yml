@@ -1,13 +1,15 @@
 name: jekins
-on: 
- push:
-   branches:
-     - "master"
-   paths:
-     - "packer/aws/jenkins/**"
-     - "scripts/jenkins.sh"
-     - ".github/wokflows/jenkins.yml"
-     - ".github/composite_actions/packer/**"
+# on: 
+#  push:
+#    branches:
+#      - "master"
+#    paths:
+#      - "packer/aws/jenkins/**"
+#      - "scripts/jenkins.sh"
+#      - ".github/wokflows/jenkins.yml"
+#      - ".github/composite_actions/packer/**"
+on: workflow_dispatch
+
 jobs:
   ami-creation:
    name: Jenkins AMI creation #AWS CLI Setup 
