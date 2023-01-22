@@ -9,7 +9,7 @@ name: nexus
 on: workflow_dispatch
 
 jobs:
-  aws-cli:
+  ami-creation:
    name: Nexus AMI creation #AWS CLI Setup 
    runs-on: ubuntu-22.04
    steps:
