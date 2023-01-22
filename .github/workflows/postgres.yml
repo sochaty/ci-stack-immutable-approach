@@ -9,7 +9,7 @@ name: postgres
 on: workflow_dispatch
  
 jobs:
-  aws-cli:
+  ami-creation:
    name: Postgres AMI creation #AWS CLI Setup 
    runs-on: ubuntu-22.04
    steps:

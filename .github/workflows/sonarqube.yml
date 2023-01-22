@@ -9,8 +9,8 @@ name: sonarqube
 on: workflow_dispatch
  
 jobs:
-  aws-cli:
-   name: Postgres AMI creation #AWS CLI Setup 
+  ami-creation:
+   name: Sonarqube AMI creation #AWS CLI Setup 
    runs-on: ubuntu-22.04
    steps:
      - name: Configure AWS Credentials
