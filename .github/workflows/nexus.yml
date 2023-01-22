@@ -1,11 +1,13 @@
 name: nexus
-on: 
- push:
-   branches:
-     - "master"
-   paths:
-     - "packer/aws/nexus/**"
-     - "scripts/nexus.sh"
+# on: 
+#  push:
+#    branches:
+#      - "master"
+#    paths:
+#      - "packer/aws/nexus/**"
+#      - "scripts/nexus.sh"
+on: workflow_dispatch
+
 jobs:
   aws-cli:
    name: Nexus AMI creation #AWS CLI Setup 
