@@ -9,6 +9,7 @@ name: sonarqube
 on: workflow_dispatch
  
 jobs:
+
   ami-creation:
    name: Sonarqube AMI creation #AWS CLI Setup 
    runs-on: ubuntu-22.04
