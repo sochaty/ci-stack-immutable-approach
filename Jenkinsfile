@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Restore packages') { 
             steps {
-                bat "dotnet restore ${workspace}\\DemoCode\\<solution-project-name>.sln"
+                sh "dotnet restore ${workspace}\\DemoCode\\<solution-project-name>.sln"
             }
         }
     }
