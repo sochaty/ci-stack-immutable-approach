@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using WebApp.Data;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,16 @@ builder.Services.AddDbContext<WebAppContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var logger = new LoggerConfiguration()
+  .ReadFrom.Configuration(builder.Configuration)
+  .Enrich.FromLogContext()
+  .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

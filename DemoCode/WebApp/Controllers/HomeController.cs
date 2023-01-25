@@ -15,6 +15,7 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Weather Forecast executing...");
             return View();
         }
 
