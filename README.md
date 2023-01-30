@@ -4,6 +4,6 @@
 
 [![nexus](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/nexus.yml/badge.svg?branch=master)](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/nexus.yml)
 
-[![nexus](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/nexus.yml/badge.svg?branch=master)](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/postgres.yml)
+[![nexus](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/postgres.yml/badge.svg?branch=master)](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/postgres.yml)
 
-[![nexus](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/nexus.yml/badge.svg?branch=master)](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/sonarqube.yml)
+[![nexus](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/sonarqube.yml/badge.svg?branch=master)](https://github.com/sochaty/ci-stack-immutable-approach/actions/workflows/sonarqube.yml)
