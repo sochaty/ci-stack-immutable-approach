@@ -9,30 +9,51 @@ variable "vpc_id" {
   description = "VPC ID"
 }
 
-variable "image_id" {
+variable "image_owner" {
   type        = string
-  description = "AMI ID"
+  description = "Image owner"
+}
+
+variable "jenkins_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Jenkins machine data"
+}
+
+variable "nexus_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Nexus machine data"
+}
+
+variable "sonarqube_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Sonarqube machine data"
+}
+
+variable "postgres_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Postgres machine data"
 }
 
 variable "key_pair_name" {
   #   default     = "myEC2KeyPair"
   description = "Key pair for connecting to launched EC2 instances"
   type        = string
-}
-
-variable "instance_type" {
-  description = "EC2 Instance type to launch"
-  type        = string
-}
-
-variable "min_instance_size" {
-  type        = number
-  description = "Minimum number of instances to launch in AutoScaling Group"
-}
-
-variable "max_instance_size" {
-  type        = number
-  description = "Maximum number of instances to launch in AutoScaling Group"
 }
 
 variable "environment" {
@@ -50,17 +71,17 @@ variable "public_subnet_ids" {
   description = "Public Subnet IDs"
 }
 
-variable "win_ec2_image_id" {
+variable "jumpbox_image_id" {
   type = string
-  description = "Windows Test EC2 Private IP"
+  description = "Jumpbox EC2 imageid"
 }
 
-variable "win_ec2_instance_type" {
+variable "jumpbox_type" {
   type = string
-  description = "Windows Test EC2 Private IP"
+  description = "Jumpbox EC2 Type"
 }
 
-variable "win_ec2_subnet_id" {
+variable "jumpbox_name" {
   type = string
-  description = "Subnet ID for Windows Test EC2"
+  description = "Jumpbox EC2 Name"
 }
