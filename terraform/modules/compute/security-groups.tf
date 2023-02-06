@@ -1,20 +1,175 @@
-resource "aws_security_group" "public_instance_security_group" {
-  name        = "Public-Instance-SG"
-  description = "Internet access for EC2 instances"
+resource "aws_security_group" "jenkins_sg" {
+  name        = "Jenkins-SG"
+  description = "Jenkins EC2 instance security rules"
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 80
+    from_port   = 8080
     protocol    = "TCP"
-    to_port     = 80
+    to_port     = 8080
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  # ingress {
+  #   from_port   = 22
+  #   protocol    = "TCP"
+  #   to_port     = 22
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
+
+  ingress {
+    from_port       = 22
+    protocol        = "TCP"
+    to_port         = 22
+    security_groups = [aws_security_group.jumpbox_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "nexus_sg" {
+  name        = "Nexus-SG"
+  description = "Nexus EC2 instance security rules"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 8081
+    protocol    = "TCP"
+    to_port     = 8081
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port       = 8081
+    protocol        = "TCP"
+    to_port         = 8081
+    security_groups = [aws_security_group.jenkins_sg.id]
+  }
+
+  ingress {
+    from_port       = 22
+    protocol        = "TCP"
+    to_port         = 22
+    security_groups = [aws_security_group.jumpbox_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "sonarqube_sg" {
+  name        = "SonarQube-SG"
+  description = "SonarQube EC2 instance security rules"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port       = 9000
+    protocol        = "TCP"
+    to_port         = 9000
+    security_groups = [aws_security_group.jenkins_sg.id]
+    description     = "Traffic from jenkins sg"
+  }
+
+  ingress {
+    from_port   = 9000
+    protocol    = "TCP"
+    to_port     = 9000
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Traffic from internet"
+  }
+
+  ingress {
+    from_port       = 22
+    protocol        = "TCP"
+    to_port         = 22
+    security_groups = [aws_security_group.jumpbox_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "postgres_sg" {
+  name        = "Postgres-SG"
+  description = "Postgres EC2 instance security rules"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port       = 5432
+    protocol        = "TCP"
+    to_port         = 5432
+    security_groups = [aws_security_group.sonarqube_sg.id]
+    description     = "Traffic from sonarqube sg"
+  }
+
+  ingress {
+    from_port       = 22
+    protocol        = "TCP"
+    to_port         = 22
+    security_groups = [aws_security_group.jumpbox_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "buildplatform_lb_security_group" {
+  name        = "BuildPlatform-LB-SG"
+  description = "BuildPlatform LB Security Group"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow web traffic to load balancer"
+  }
+
+  egress {
+    from_port = 8080
+    protocol  = "TCP"
+    to_port   = 9000
+    security_groups = [aws_security_group.jenkins_sg.id, aws_security_group.nexus_sg.id,
+    aws_security_group.sonarqube_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+}
+
+resource "aws_security_group" "jumpbox_sg" {
+  name        = "JumpBox-SG"
+  description = "JumpBox EC2 instance security rules"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 22
     protocol    = "TCP"
     to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -23,117 +178,4 @@ resource "aws_security_group" "public_instance_security_group" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-resource "aws_security_group" "win_ec2_instance_security_group" {
-  name        = "Win-Instance-SG"
-  description = "Internet access for Win EC2 instances"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 80
-    protocol    = "TCP"
-    to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 3389
-    protocol    = "TCP"
-    to_port     = 3389
-    cidr_blocks = ["0.0.0.0/0"] 
-  }
-
-  egress {
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "private_instance_security_group" {
-  name        = "Private-Instance-SG"
-  description = "Only allow internal instance to access these instances"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    from_port       = 0
-    protocol        = "-1"
-    to_port         = 0
-    security_groups = [aws_security_group.public_instance_security_group.id]
-  }
-
-  ingress {
-    from_port   = 80
-    protocol    = "TCP"
-    to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow traffic for health checking, remember this doesnt allow public internet!"
-  }
-
-  egress {
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "internet_lb_security_group" {
-  name        = "PUBLIC-LB-SG"
-  description = "Public LB Security Group"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow web traffic to load balancer"
-  }
-
-  egress {
-    from_port = 0
-    protocol  = "TCP"
-    to_port   = 80
-    security_groups = [aws_security_group.public_instance_security_group.id]
-  }
-
-  egress {
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]    
-  }
-
-}
-
-resource "aws_security_group" "internal_lb_security_group" {
-  name        = "INTERNAL-lb-SG"
-  description = "In ternal LB Security Group"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow web traffic to load balancer"
-  }
-
-  egress {
-    from_port = 0
-    protocol  = "TCP"
-    to_port   = 80
-    security_groups = [aws_security_group.private_instance_security_group.id]
-  }
-
-  egress {
-    from_port   = 0
-    protocol    = "-1"
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
 }

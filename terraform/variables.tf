@@ -26,24 +26,40 @@ variable "zones" {
   description = "Availability zones for subnet deployment"
 }
 
-variable "image_id" {
-  type        = string
-  description = "AMI ID"
+variable "jenkins_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Jenkins machine data"
 }
 
-variable "instance_type" {
-  description = "EC2 Instance type to launch"
-  type        = string
+variable "nexus_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Nexus machine data"
 }
 
-variable "min_instance_size" {
-  type        = number
-  description = "Minimum number of instances to launch in AutoScaling Group"
+variable "sonarqube_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Sonarqube machine data"
 }
 
-variable "max_instance_size" {
-  type        = number
-  description = "Maximum number of instances to launch in AutoScaling Group"
+variable "postgres_machine_data" {
+  type = object({
+    name  = string
+    image = string
+    type  = string
+  })
+  description = "Postgres machine data"
 }
 
 variable "key_pair_name" {
@@ -52,12 +68,21 @@ variable "key_pair_name" {
   type        = string
 }
 
-variable "win_ec2_image_id" {
-  type = string
-  description = "Windows Test EC2 Private IP"
+variable "image_owner" {
+  type        = string
+  description = "Image owner"
+}
+variable "jumpbox_image_id" {
+  type        = string
+  description = "Jumpbox EC2 imageid"
 }
 
-variable "win_ec2_instance_type" {
-  type = string
-  description = "Windows Test EC2 Private IP"
+variable "jumpbox_type" {
+  type        = string
+  description = "Jumpbox EC2 Type"
+}
+
+variable "jumpbox_name" {
+  type        = string
+  description = "Jumpbox EC2 Name"
 }

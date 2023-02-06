@@ -8,21 +8,22 @@ module "network" {
 }
 
 module "compute" {
-  source             = "./modules/compute"
-  instance_type      = var.instance_type
-  max_instance_size  = var.max_instance_size
-  min_instance_size  = var.min_instance_size
-  key_pair_name      = var.key_pair_name
-  environment        = var.environment
-  public_subnet_ids  = module.network.public_subnet_ids
-  private_subnet_ids = module.network.private_subnet_ids
-  vpc_id             = module.network.vpc_id
-  image_id           = var.image_id
-  # for test Windows Server EC2 instance
-  win_ec2_image_id = var.win_ec2_image_id
-  win_ec2_instance_type = var.instance_type
-  # win_ec2_private_ip = var.win_ec2_private_ip
-  win_ec2_subnet_id =  tolist(module.network.public_subnet_ids)[0]
+  source = "./modules/compute"
+
+  environment            = var.environment
+  vpc_id                 = module.network.vpc_id
+  key_pair_name          = var.key_pair_name
+  private_subnet_ids     = module.network.private_subnet_ids
+  public_subnet_ids      = module.network.public_subnet_ids
+  jenkins_machine_data   = var.jenkins_machine_data
+  nexus_machine_data     = var.nexus_machine_data
+  postgres_machine_data  = var.postgres_machine_data
+  sonarqube_machine_data = var.sonarqube_machine_data
+  image_owner            = var.image_owner
+  jumpbox_image_id       = var.jumpbox_image_id
+  jumpbox_name           = var.jumpbox_name
+  jumpbox_type           = var.jumpbox_type
+
   depends_on = [
     module.network
   ]
