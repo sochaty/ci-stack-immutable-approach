@@ -1,4 +1,14 @@
 #!/bin/bash
+sudo cp ../../etc/sysctl.conf ../../root/sysctl.conf_backup
+sudo chmod 777 ../../etc/sysctl.conf
+
+cat <<EOT>> ../../etc/sysctl.conf
+vm.max_map_count=262144
+fs.file-max=65536
+ulimit -n 65536
+ulimit -u 4096
+EOT
+
 sudo apt-get update
 sudo apt-get install openjdk-11-jdk -y
  sudo apt-get install openjdk-11-jre -y
@@ -13,6 +23,7 @@ sudo useradd -c "SonarQube - User" -d /opt/sonarqube/ -g sonar sonar
 sudo chown sonar:sonar /opt/sonarqube/ -R
 sudo cp /opt/sonarqube/conf/sonar.properties /root/sonar.properties_backup
 sudo chmod 777 ~/../../opt/sonarqube/conf/sonar.properties
+
 cat <<EOT> ~/../../opt/sonarqube/conf/sonar.properties
 sonar.jdbc.username=sonar
 sonar.jdbc.password=sonar.admin@2023
@@ -24,8 +35,10 @@ sonar.search.javaOpts=-Xmx512m -Xms512m -XX:+HeapDumpOnOutOfMemoryError
 sonar.log.level=INFO
 sonar.path.logs=logs
 EOT
+
 sudo touch ~/../../etc/systemd/system/sonarqube.service
 sudo chmod 777 ~/../../etc/systemd/system/sonarqube.service
+
 cat <<EOT> ~/../../etc/systemd/system/sonarqube.service
 [Unit]
 Description=SonarQube service
@@ -42,8 +55,6 @@ LimitNPROC=4096
 [Install]
 WantedBy=multi-user.target
 EOT
-
-sudo echo 'vm.max_map_count = 262144' >> ~/../../etc/sysctl.conf
 
 sudo systemctl daemon-reload
 sudo systemctl enable sonarqube.service
