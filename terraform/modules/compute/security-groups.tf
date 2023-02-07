@@ -72,17 +72,17 @@ resource "aws_security_group" "sonarqube_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port       = 9000
+    from_port       = 80
     protocol        = "TCP"
-    to_port         = 9000
+    to_port         = 80
     security_groups = [aws_security_group.jenkins_sg.id]
     description     = "Traffic from jenkins sg"
   }
 
   ingress {
-    from_port   = 9000
+    from_port   = 80
     protocol    = "TCP"
-    to_port     = 9000
+    to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
     description = "Traffic from internet"
   }

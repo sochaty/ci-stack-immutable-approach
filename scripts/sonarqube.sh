@@ -43,6 +43,8 @@ LimitNPROC=4096
 WantedBy=multi-user.target
 EOT
 
+sudo echo 'vm.max_map_count = 262144' >> ~/../../etc/sysctl.conf
+
 sudo systemctl daemon-reload
 sudo systemctl enable sonarqube.service
 #systemctl start sonarqube.service
