@@ -85,13 +85,13 @@ resource "aws_lb_target_group_attachment" "nexus_tg_attachment" {
 
 resource "aws_lb_target_group" "sonarqube_tg" {
   name     = "${var.environment}-Sonarqube-tg"
-  port     = 9000
+  port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
   health_check {
     healthy_threshold   = 5
     interval            = 30
-    port                = 9000
+    port                = 80
     path                = ""
     unhealthy_threshold = 5
     protocol            = "HTTP"
@@ -100,7 +100,7 @@ resource "aws_lb_target_group" "sonarqube_tg" {
 
 resource "aws_lb_listener" "sonarqube_listener" {
   load_balancer_arn = aws_lb.internet_load_balancer.arn
-  port              = "9000"
+  port              = "80"
   protocol          = "HTTP"
 
   default_action {
@@ -112,7 +112,7 @@ resource "aws_lb_listener" "sonarqube_listener" {
 resource "aws_lb_target_group_attachment" "sonarqube_tg_attachment" {
   target_group_arn = aws_lb_target_group.sonarqube_tg.arn
   target_id        = aws_instance.sonarqube_server.id
-  port             = 9000
+  port             = 80
   depends_on = [
     aws_instance.sonarqube_server,
     aws_lb_target_group.sonarqube_tg
