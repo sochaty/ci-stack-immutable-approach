@@ -85,13 +85,13 @@ resource "aws_lb_target_group_attachment" "nexus_tg_attachment" {
 
 resource "aws_lb_target_group" "sonarqube_tg" {
   name     = "${var.environment}-Sonarqube-tg"
-  port     = 9000
+  port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
   health_check {
     healthy_threshold   = 5
     interval            = 30
-    port                = 9000
+    port                = 80
     path                = ""
     unhealthy_threshold = 5
     protocol            = "HTTP"
