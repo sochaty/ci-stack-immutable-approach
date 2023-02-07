@@ -1,4 +1,7 @@
 #!/bin/bash
+sudo apt-get update
+sudo apt-get install openjdk-11-jdk -y
+ sudo apt-get install openjdk-11-jre -y
 sudo mkdir -p /sonarqube/
 cd /sonarqube/
 sudo curl -O https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.3.0.34182.zip
