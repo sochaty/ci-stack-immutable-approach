@@ -1,4 +1,5 @@
 #!/bin/bash
+<<<<<<< HEAD
 sudo cp ../../etc/sysctl.conf ../../root/sysctl.conf_backup
 sudo chmod 777 ../../etc/sysctl.conf
 
@@ -9,6 +10,8 @@ ulimit -n 65536
 ulimit -u 4096
 EOT
 
+=======
+>>>>>>> master
 sudo apt-get update
 sudo apt-get install openjdk-11-jdk -y
  sudo apt-get install openjdk-11-jre -y
