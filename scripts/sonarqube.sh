@@ -9,9 +9,20 @@ ulimit -n 65536
 ulimit -u 4096
 EOT
 
+sudo cp /etc/security/limits.conf /root/sec_limit.conf_backup
+sudo chmod 777 ../../etc/security/limits.conf
+
+cat <<EOT> ../../etc/security/limits.conf
+sonarqube   -   nofile   65536
+sonarqube   -   nproc    409
+EOT
+
+sudo apt-get update -y
 sudo apt-get update
 sudo apt-get install openjdk-11-jdk -y
- sudo apt-get install openjdk-11-jre -y
+sudo update-alternatives --config java
+java -version
+
 sudo mkdir -p /sonarqube/
 cd /sonarqube/
 sudo curl -O https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.3.0.34182.zip
