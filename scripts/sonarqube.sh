@@ -35,8 +35,6 @@ sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/openjdk-
 sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/openjdk-11.0.18/bin/javac" 0
 sudo update-alternatives --set java /usr/lib/jvm/openjdk-11.0.18/bin/java
 sudo update-alternatives --set javac /usr/lib/jvm/openjdk-11.0.18/bin/javac
-#sudo apt-get install openjdk-11-jdk -y
-#sudo update-alternatives --config java
 java -version
 
 sudo apt-get update -y
