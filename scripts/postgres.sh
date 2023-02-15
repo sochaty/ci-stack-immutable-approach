@@ -36,4 +36,4 @@ sudo -i -u postgres psql -c "ALTER USER sonar WITH ENCRYPTED PASSWORD 'sonar.adm
 sudo -i -u postgres psql -c "CREATE DATABASE sonarqube OWNER sonar;"
 sudo -i -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE sonarqube to sonar;"
 sudo systemctl restart  postgresql
-sudo reboot
+# sudo reboot
