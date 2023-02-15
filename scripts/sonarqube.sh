@@ -18,9 +18,23 @@ sonarqube   -   nproc    409
 EOT
 
 sudo apt-get update -y
-sudo apt-get autoremove
-sudo apt-get install openjdk-11-jdk -y
-sudo update-alternatives --config java
+sudo wget https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.18+10/openlogic-openjdk-11.0.18+10-linux-x64.tar.gz
+tar -xvf openlogic-openjdk-11.0.18+10-linux-x64.tar.gz
+sudo mkdir -p /usr/lib/jvm/openjdk-11.0.18/
+sudo mv openlogic-openjdk-11.0.18+10-linux-x64/* /usr/lib/jvm/openjdk-11.0.18/
+sudo chmod 777 ~/../../etc/environment
+
+cat <<EOT>> ~/../../etc/environment
+JAVA_HOME="/usr/lib/jvm/openjdk-11.0.18/bin"
+EOT
+
+export JAVA_HOME=/usr/lib/jvm/openjdk-11.0.18/bin
+
+. ~/../../etc/environment
+sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/openjdk-11.0.18/bin/java" 0
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/openjdk-11.0.18/bin/javac" 0
+sudo update-alternatives --set java /usr/lib/jvm/openjdk-11.0.18/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/openjdk-11.0.18/bin/javac
 java -version
 
 sudo apt-get update -y
@@ -40,7 +54,7 @@ sudo chmod 777 ~/../../opt/sonarqube/conf/sonar.properties
 cat <<EOT> ~/../../opt/sonarqube/conf/sonar.properties
 sonar.jdbc.username=sonar
 sonar.jdbc.password=sonar.admin@2023
-sonar.jdbc.url=jdbc:postgresql://172.31.82.251:5432/sonarqube
+sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
 #sonar.web.host=0.0.0.0
 #sonar.web.port=9000
 #sonar.web.javaAdditionalOpts=-server
