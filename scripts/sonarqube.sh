@@ -105,4 +105,4 @@ sudo systemctl enable nginx.service
 sudo ufw allow 80,9000,9001/tcp
 # echo "System reboot in 30 sec"
 # sleep 30
-sudo reboot
+# sudo reboot
