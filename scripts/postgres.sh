@@ -42,6 +42,18 @@ sudo wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
 sudo apt-get install postgresql postgresql-contrib -y
 #sudo -u postgres psql -c "SELECT version();"
+sudo chmod 777 ~/../../etc/postgresql/14/main/postgresql.conf
+sudo sed -i '1,/#listen_addresses/s/#listen_addresses/listen_addresses/g' ~/../../etc/postgresql/14/main/postgresql.conf
+# sed '0,/foo/s//bar/' file 
+# sed '1,/foo/ s/foo/bar/'
+sudo sed -i '1,/localhost/s/localhost/*/g' ~/../../etc/postgresql/14/main/postgresql.conf
+
+# sudo chmod 777 ~/../../etc/postgresql/14/main/pg_hba.conf
+# cat <<EOT>> ~/../../etc/postgresql/14/main/pg_hba.conf
+# # IPv4 remote connections:
+# host    all             all             0.0.0.0/0               scram-sha-256
+# EOT
+
 sudo systemctl enable postgresql.service
 sudo systemctl start  postgresql.service
 
