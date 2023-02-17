@@ -23,6 +23,7 @@ module "compute" {
   jumpbox_image_id       = var.jumpbox_image_id
   jumpbox_name           = var.jumpbox_name
   jumpbox_type           = var.jumpbox_type
+  postgres_user_script = "./scripts/postgres-user-data.sh"
 
   depends_on = [
     module.network

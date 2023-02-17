@@ -85,3 +85,8 @@ variable "jumpbox_name" {
   type = string
   description = "Jumpbox EC2 Name"
 }
+
+variable "postgres_user_script" {
+  type = string
+  description = "Postgres EC2 user data script"
+}
