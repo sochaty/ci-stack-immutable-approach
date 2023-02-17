@@ -146,9 +146,16 @@ resource "aws_security_group" "buildplatform_lb_security_group" {
   egress {
     from_port = 8080
     protocol  = "TCP"
-    to_port   = 9000
+    to_port   = 8081
     security_groups = [aws_security_group.jenkins_sg.id, aws_security_group.nexus_sg.id,
     aws_security_group.sonarqube_sg.id]
+  }
+
+  egress {
+    from_port = 80
+    protocol  = "TCP"
+    to_port   = 80
+    security_groups = [aws_security_group.sonarqube_sg.id]
   }
 
   egress {
