@@ -10,6 +10,6 @@
 #   value = data.aws_instances.public_instances.public_ips
 # }
 
-# output "internal-instance-private-ips" {
-#   value = data.aws_instances.private_instances.private_ips
-# }
+output "postgres_host_ipaddress" {
+  value = data.aws_instance.postgres_server_instance.private_ip
+}

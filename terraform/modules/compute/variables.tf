@@ -72,16 +72,26 @@ variable "public_subnet_ids" {
 }
 
 variable "jumpbox_image_id" {
-  type = string
+  type        = string
   description = "Jumpbox EC2 imageid"
 }
 
 variable "jumpbox_type" {
-  type = string
+  type        = string
   description = "Jumpbox EC2 Type"
 }
 
 variable "jumpbox_name" {
-  type = string
+  type        = string
   description = "Jumpbox EC2 Name"
+}
+
+variable "postgres_user_script" {
+  type        = string
+  description = "Postgres EC2 user data script"
+}
+
+variable "sonar_user_script" {
+  type        = string
+  description = "Sonarqube EC2 user data script"
 }
