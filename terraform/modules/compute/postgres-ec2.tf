@@ -28,7 +28,7 @@ resource "aws_instance" "postgres_server" {
   key_name        = var.key_pair_name
   subnet_id       = tolist(var.private_subnet_ids)[1]
   security_groups = [aws_security_group.postgres_sg.id]
-  user_data       = file(var.postgres_user_script)
+  user_data       = file(var.postgres_user_script)  
   tags = {
     "Name" = var.postgres_machine_data.name
   }
