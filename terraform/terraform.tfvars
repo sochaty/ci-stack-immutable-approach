@@ -42,3 +42,5 @@ jumpbox_image_id = "ami-00874d747dde814fa"
 jumpbox_name = "BastionServer"
 
 jumpbox_type = "t2.small"
+
+# build1
