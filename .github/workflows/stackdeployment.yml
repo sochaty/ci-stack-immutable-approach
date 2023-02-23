@@ -1,7 +1,5 @@
-name: "Terraform Infrastructure Change Management Pipeline with GitHub Actions"
-
+name: "Infrastructure stack deployment"
 on:
-
  push:
    branches:
     - "master"
@@ -13,6 +11,9 @@ on:
    paths:
     - "terraform/**"
 # on: workflow_dispatch
+permissions:
+  pull-requests: write
+  
 
 
 env:
