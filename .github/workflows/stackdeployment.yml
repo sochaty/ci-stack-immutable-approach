@@ -2,11 +2,11 @@ name: "Terraform Infrastructure Change Management Pipeline with GitHub Actions"
 
 on:
 
-#  push:
-#    branches:
-#    - master
-#    paths:
-#    - terraform/**
+ push:
+   branches:
+    - "master"
+   paths:
+    - "terraform/**"
  pull_request:
    branches:
     - "master"
@@ -25,7 +25,7 @@ env:
 jobs:
  terraform:
    name: "Terraform Infrastructure Change Management"
-   runs-on: ubuntu-latest
+   runs-on: ubuntu-22.04
    defaults:
      run:
        shell: bash
