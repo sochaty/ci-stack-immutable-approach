@@ -11,6 +11,9 @@ on:
    paths:
     - "terraform/**"
 # on: workflow_dispatch
+permissions:
+  pull-requests: write
+  
 
 
 env:
