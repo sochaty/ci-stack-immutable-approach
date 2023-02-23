@@ -9,9 +9,9 @@ on:
 #    - terraform/**
  pull_request:
    branches:
-    - master
+    - "master"
    paths:
-    - terraform/**
+    - "terraform/**"
 
 env:
  # verbosity setting for Terraform logs
