@@ -37,6 +37,18 @@ jobs:
    steps:
      - name: Checkout the repository to the runner
        uses: actions/checkout@v2
+
+     - name: Configure AWS Credentials
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+     - name: Test configuration of AWS CLI
+       run: |
+        aws --version
+        aws configure list | grep region | awk '{print $2}'
  
      - name: Setup Terraform with specified version on the runner
        uses: hashicorp/setup-terraform@v2
