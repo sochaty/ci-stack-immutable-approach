@@ -27,7 +27,7 @@ env:
 
 jobs:
  terraform:
-   name: "Terraform Infrastructure Change Management"
+   name: "CI/CD Infrastructure Deployment Workflow"
    runs-on: ubuntu-22.04
    defaults:
      run:
