@@ -7,21 +7,16 @@ resource "aws_security_group" "jenkins_sg" {
     from_port   = 8080
     protocol    = "TCP"
     to_port     = 8080
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.buildplatform_lb_security_group.id]
+    description = "Traffic from load balancer"
   }
-
-  # ingress {
-  #   from_port   = 22
-  #   protocol    = "TCP"
-  #   to_port     = 22
-  #   cidr_blocks = ["0.0.0.0/0"]
-  # }
 
   ingress {
     from_port       = 22
     protocol        = "TCP"
     to_port         = 22
     security_groups = [aws_security_group.jumpbox_sg.id]
+    description     = "Traffic from jumpbox"
   }
 
   egress {
@@ -41,7 +36,8 @@ resource "aws_security_group" "nexus_sg" {
     from_port   = 8081
     protocol    = "TCP"
     to_port     = 8081
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.buildplatform_lb_security_group.id]
+    description = "Traffic from load balancer"
   }
 
   ingress {
@@ -56,6 +52,7 @@ resource "aws_security_group" "nexus_sg" {
     protocol        = "TCP"
     to_port         = 22
     security_groups = [aws_security_group.jumpbox_sg.id]
+    description     = "Traffic from jumpbox"
   }
 
   egress {
@@ -83,8 +80,8 @@ resource "aws_security_group" "sonarqube_sg" {
     from_port   = 80
     protocol    = "TCP"
     to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Traffic from internet"
+    security_groups = [aws_security_group.buildplatform_lb_security_group.id]
+    description = "Traffic from load balancer"
   }
 
   ingress {
@@ -92,6 +89,7 @@ resource "aws_security_group" "sonarqube_sg" {
     protocol        = "TCP"
     to_port         = 22
     security_groups = [aws_security_group.jumpbox_sg.id]
+    description     = "Traffic from jumpbox"
   }
 
   egress {
@@ -120,6 +118,7 @@ resource "aws_security_group" "postgres_sg" {
     protocol        = "TCP"
     to_port         = 22
     security_groups = [aws_security_group.jumpbox_sg.id]
+    description     = "Traffic from jumpbox"
   }
 
   egress {
