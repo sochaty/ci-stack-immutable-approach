@@ -25,6 +25,10 @@ resource "aws_security_group" "jenkins_sg" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+  depends_on = [
+    aws_security_group.jumpbox_sg,
+    aws_security_group.buildplatform_lb_security_group
+  ]
 }
 
 resource "aws_security_group" "nexus_sg" {
@@ -61,6 +65,11 @@ resource "aws_security_group" "nexus_sg" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+  depends_on = [
+    aws_security_group.jumpbox_sg,
+    aws_security_group.buildplatform_lb_security_group,
+    aws_security_group.jenkins_sg
+  ]
 }
 
 resource "aws_security_group" "sonarqube_sg" {
@@ -98,6 +107,11 @@ resource "aws_security_group" "sonarqube_sg" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+  depends_on = [
+    aws_security_group.jumpbox_sg,
+    aws_security_group.buildplatform_lb_security_group,
+    aws_security_group.jenkins_sg
+  ]
 }
 
 resource "aws_security_group" "postgres_sg" {
@@ -127,6 +141,10 @@ resource "aws_security_group" "postgres_sg" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+  depends_on = [
+    aws_security_group.jumpbox_sg,
+    aws_security_group.sonarqube_sg
+  ]
 }
 
 resource "aws_security_group" "buildplatform_lb_security_group" {
@@ -142,20 +160,19 @@ resource "aws_security_group" "buildplatform_lb_security_group" {
     description = "Allow web traffic to load balancer"
   }
 
-  egress {
-    from_port = 8080
-    protocol  = "TCP"
-    to_port   = 8081
-    security_groups = [aws_security_group.jenkins_sg.id, aws_security_group.nexus_sg.id,
-    aws_security_group.sonarqube_sg.id]
-  }
+  # egress {
+  #   from_port = 8080
+  #   protocol  = "TCP"
+  #   to_port   = 8081
+  #   security_groups = [aws_security_group.jenkins_sg.id, aws_security_group.nexus_sg.id]
+  # }
 
-  egress {
-    from_port = 80
-    protocol  = "TCP"
-    to_port   = 80
-    security_groups = [aws_security_group.sonarqube_sg.id]
-  }
+  # egress {
+  #   from_port = 80
+  #   protocol  = "TCP"
+  #   to_port   = 80
+  #   security_groups = [aws_security_group.sonarqube_sg.id]
+  # }
 
   egress {
     from_port   = 0
